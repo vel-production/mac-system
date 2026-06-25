@@ -1,39 +1,823 @@
 <!DOCTYPE html>
-<html lang="uk">
-<head>
+<html lang="uk"><head><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAC AI SYSTEMS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-black text-white min-h-screen flex flex-col justify-center items-center font-sans">
+    <title>Marden Vape | Онлайн Вітрина</title>
+    <style>
+        :root {
+            --pink: #ff007f;
+            --cyan: #00f0ff;
+            --purple: #9333ea;
+            --bg: #030305;
+            --card-bg: rgba(15, 15, 27, 0.65);
+            --card-border: rgba(255, 255, 255, 0.06);
+            --text: #f8fafc;
+            --text-muted: #64748b;
+            --gradient-glow: linear-gradient(135deg, var(--pink), var(--purple), var(--cyan));
+        }
 
-    <div class="text-center p-6 max-w-xl">
-        <h1 class="text-5xl md:text-7xl font-black tracking-tight text-red-600 animate-pulse uppercase">
-            MAC AI Systems
-        </h1>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; 
+        }
         
-        <p class="text-xl md:text-2xl mt-6 text-gray-300 font-light">
-            Перша повністю automatic-екосистема продажів на базі ШІ.
-        </p>
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            -webkit-font-smoothing: antialiased; 
+            padding-bottom: 120px;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-        <div class="grid grid-cols-2 gap-4 mt-10 border-t border-b border-gray-800 py-6">
-            <div>
-                <p class="text-3xl font-bold text-green-400">$1,000,000</p>
-                <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Поточна оцінка</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold text-white">24/7</p>
-                <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Автономна робота</p>
-            </div>
-        </div>
+        /* Анімовані фонові плазмові сфери (Ефект диму) */
+        body::before, body::after {
+            content: ''; position: fixed; width: 400px; height: 400px; border-radius: 50%;
+            z-index: -1; filter: blur(140px); opacity: 0.15; pointer-events: none;
+        }
+        body::before { background: var(--pink); top: -10%; left: -10%; animation: floatBg 12s infinite alternate; }
+        body::after { background: var(--cyan); bottom: 10%; right: -10%; animation: floatBg 16s infinite alternate-reverse; }
 
-        <div class="mt-10">
-            <a href="https://t.me/mac_ai_systems_bot" target="_blank" class="inline-block bg-red-600 hover:bg-red-700 text-white font-black text-xl px-10 py-5 rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-red-900/50 uppercase tracking-wide">
-                Запустити ШІ-Продавця
-            </a>
+        @keyframes floatBg {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 50px) scale(1.2); }
+        }
+
+        /* Преміум Вікно 18+ */
+        #age-gate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 5, 0.75); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px;
+        }
+        .age-box {
+            text-align: center; max-width: 450px; background: rgba(15, 15, 25, 0.85);
+            border: 1px solid rgba(255, 0, 127, 0.25); border-radius: 28px; padding: 45px 35px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(147, 51, 234, 0.15);
+            animation: pulseGlow 4s infinite alternate;
+        }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 30px rgba(255, 0, 127, 0.1); border-color: rgba(255, 0, 127, 0.2); }
+            100% { box-shadow: 0 0 60px rgba(0, 240, 255, 0.2); border-color: rgba(0, 240, 255, 0.3); }
+        }
+        .age-box h1 { 
+            font-size: 34px; font-weight: 900; margin-bottom: 15px; letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--pink), var(--cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .age-box p { color: #94a3b8; margin-bottom: 35px; line-height: 1.6; font-size: 15px; }
+        .age-buttons { display: flex; flex-direction: column; gap: 14px; width: 100%; }
+
+        /* Стильна Футуристична Шапка */
+        header {
+            background: rgba(3, 3, 5, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            padding: 22px 8%; display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--card-border);
+        }
+        .logo { font-size: 28px; font-weight: 950; letter-spacing: 2px; text-transform: uppercase; font-style: italic; }
+        .logo span { 
+            background: linear-gradient(90deg, var(--pink), var(--cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .tg-btn-top {
+            background: linear-gradient(135deg, #00b4db, #0083b0); color: #fff; padding: 11px 26px;
+            border-radius: 30px; text-decoration: none; font-weight: 800; font-size: 14px;
+            box-shadow: 0 0 20px rgba(0, 180, 219, 0.25); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .tg-btn-top:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); }
+
+        /* Навігація по поличках */
+        .shelf-navigation { max-width: 1300px; margin: 40px auto 10px auto; padding: 0 20px; text-align: center; }
+        .nav-title { font-size: 12px; color: #64748b; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 2.5px; font-weight: 800; }
+        .nav-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .nav-btn {
+            background: rgba(15, 15, 25, 0.6); color: #94a3b8; border: 1px solid var(--card-border);
+            padding: 13px 28px; border-radius: 30px; font-weight: 700; font-size: 14px;
+            cursor: pointer; transition: all 0.25s ease; backdrop-filter: blur(5px);
+        }
+        .nav-btn:hover { border-color: var(--cyan); color: #fff; transform: translateY(-1px); }
+        .nav-btn.active { 
+            background: var(--gradient-glow); color: white; border-color: transparent; 
+            box-shadow: 0 0 25px rgba(147, 51, 234, 0.45); 
+        }
+
+        /* Контейнер сайту */
+        .container { max-width: 1350px; margin: 0 auto; padding: 10px 20px 40px 20px; }
+        
+        /* Секція великої полички */
+        .shelf-section {
+            background: var(--card-bg); border: 1px solid var(--card-border); backdrop-filter: blur(10px);
+            border-radius: 28px; padding: 35px; margin-top: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4); position: relative;
+        }
+        .shelf-section::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--pink), var(--cyan), transparent);
+        }
+        .shelf-title {
+            margin-bottom: 35px; padding-bottom: 22px; border-bottom: 1px solid var(--card-border); 
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+        }
+        .shelf-title h2 { font-size: 26px; font-weight: 900; display: flex; align-items: center; gap: 12px; }
+        .shelf-title .badge { 
+            font-size: 15px; color: #fff; background: rgba(255, 255, 255, 0.03); 
+            padding: 9px 22px; border-radius: 30px; font-weight: 800; 
+            border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(5px);
+        }
+        
+        /* Категорії смаків */
+        .flavor-category { margin-bottom: 45px; }
+        .flavor-category:last-child { margin-bottom: 0; }
+        .category-title {
+            font-size: 14px; color: var(--cyan); font-weight: 800; text-transform: uppercase; letter-spacing: 2.5px;
+            margin-bottom: 25px; display: flex; align-items: center; gap: 10px;
+        }
+        .category-title::after {
+            content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0, 240, 255, 0.25), transparent); margin-left: 15px;
+        }
+
+        /* Сітка */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 22px; }
+
+        /* КОСМІЧНА КАРТКА ТОВАРУ */
+        .card {
+            background: rgba(20, 20, 35, 0.4); border-radius: 24px; padding: 22px;
+            border: 1px solid var(--card-border); display: flex; flex-direction: column; 
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative;
+        }
+        .card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            border-color: rgba(255, 0, 127, 0.35); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(255, 0, 127, 0.15); 
+            background: rgba(25, 25, 45, 0.75);
+        }
+        .card-icon { 
+            height: 110px; display: flex; align-items: center; justify-content: center; 
+            font-size: 42px; background: rgba(5, 5, 10, 0.6); border-radius: 18px; margin-bottom: 18px; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+        .card:hover .card-icon { transform: scale(1.12) rotate(4deg); background: rgba(0,0,0,0.8); }
+        
+        .card-title { 
+            font-size: 15px; font-weight: 700; text-align: center; min-height: 54px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            gap: 6px; line-height: 1.4; color: #fff;
+        }
+        
+        /* Шильдики об'ємів */
+        .ml-badge { font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .ml-30 { background: rgba(147, 51, 234, 0.15); color: #d8b4fe; border: 1px solid rgba(147, 51, 234, 0.3); }
+        .ml-10 { background: rgba(0, 240, 255, 0.15); color: #67e8f9; border: 1px solid rgba(0, 240, 255, 0.3); }
+        .ml-hard { background: rgba(255, 0, 127, 0.15); color: #f472b6; border: 1px solid rgba(255, 0, 127, 0.3); }
+
+        .card-price { font-size: 20px; font-weight: 800; text-align: center; margin: 16px 0 14px 0; color: #fff; }
+        
+        .stock-count { font-size: 11px; color: #94a3b8; font-weight: 600; margin-top: 5px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .stock-count::before { content: ''; display: inline-block; width: 6px; height: 6px; background-color: #00ff66; border-radius: 50%; box-shadow: 0 0 10px #00ff66; }
+
+        /* Кнопки з ефектом бліку */
+        .btn {
+            background: linear-gradient(135deg, #ff007f, #7928ca); color: #fff; border: none; padding: 12px;
+            border-radius: 14px; font-weight: 800; cursor: pointer; text-align: center; text-decoration: none; 
+            display: block; font-size: 14px; transition: all 0.25s ease; position: relative; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.25);
+        }
+        .btn::after {
+            content: ''; position: absolute; top: -50%; left: -60%; width: 30%; height: 200%;
+            background: rgba(255,255,255,0.2); transform: rotate(25deg); transition: none;
+        }
+        .card:hover .btn::after { left: 130%; transition: all 0.6s ease; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 0, 127, 0.45); filter: brightness(1.1); }
+        
+        .btn-red { background: linear-gradient(135deg, #f43f5e, #e11d48); box-shadow: 0 4px 15px rgba(244, 63, 94, 0.25); }
+        .btn-red:hover { box-shadow: 0 6px 20px rgba(225, 29, 72, 0.45); }
+
+        /* Керування кількістю */
+        .quantity-control {
+            display: flex; justify-content: space-between; align-items: center; 
+            background: #07070c; border-radius: 14px; padding: 3px; border: 1px solid var(--card-border);
+        }
+        .qty-btn {
+            background: none; border: none; color: #fff; font-size: 18px; font-weight: bold; 
+            width: 34px; height: 34px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .qty-btn:hover { color: var(--cyan); }
+        .qty-count { font-size: 15px; font-weight: 700; color: #fff; }
+
+        /* Плаваючий Преміум Кошик-Капсула */
+        #cart-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); 
+            width: 92%; max-width: 750px; background: rgba(12, 12, 22, 0.8); 
+            border: 1px solid rgba(0, 240, 255, 0.35); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 16px 32px; display: none; justify-content: space-between; align-items: center; 
+            z-index: 9999; border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0, 240, 255, 0.15);
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes slideUp { from { bottom: -60px; opacity: 0; } to { bottom: 25px; opacity: 1; } }
+        .cart-info { font-size: 15px; font-weight: 700; }
+        .cart-info span { 
+            background: linear-gradient(90deg, var(--pink), var(--cyan));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 800; font-size: 19px;
+        }
+        .cart-btn { 
+            background: linear-gradient(135deg, #00b4db, #0083b0); padding: 12px 28px; border-radius: 30px; 
+            text-decoration: none; color: #fff; font-weight: 800; font-size: 14px; border: none; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 180, 219, 0.3); transition: all 0.25s;
+        }
+        .cart-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 240, 255, 0.4); }
+
+        footer { text-align: center; padding: 100px 20px; color: #475569; font-size: 13px; border-top: 1px solid var(--card-border); margin-top: 80px; }
+
+        /* СТИЛІ АДМІНКИ */
+        .secret-admin-trigger { cursor: default; color: var(--bg); user-select: none; }
+        #admin-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(3, 3, 5, 0.97); z-index: 100000;
+            display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px;
+        }
+        .admin-box {
+            width: 100%; max-width: 380px; background: #0c0c14;
+            border: 1px solid var(--card-border); border-radius: 24px; padding: 35px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        }
+        .admin-box h3 { font-size: 22px; margin-bottom: 25px; text-align: center; color: var(--text); font-weight: 800; }
+        .admin-input {
+            width: 100%; background: #050508; border: 1px solid var(--card-border); border-radius: 12px;
+            padding: 14px 16px; color: #fff; font-size: 14px; margin-bottom: 18px; outline: none;
+        }
+        .admin-input:focus { border-color: var(--pink); }
+        .admin-box-buttons { display: flex; gap: 12px; }
+        .admin-box-buttons .btn { flex: 1; padding: 12px; }
+
+        .admin-controls {
+            display: none; background: rgba(3,3,5,0.95); border-radius: 16px; padding: 8px;
+            position: absolute; top: 8px; left: 8px; right: 8px; z-index: 10; gap: 6px; flex-wrap: wrap;
+        }
+        .admin-ctrl-btn { flex: 1; min-width: 50px; font-size: 11px; padding: 6px 2px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; color: #fff; text-align: center; }
+        .btn-ctrl-edit { background: #2563eb; }
+        .btn-ctrl-stock { background: #d97706; }
+        .btn-ctrl-del { background: #dc2626; }
+        
+        .admin-add-flavor-zone { display: none; justify-content: center; margin-top: 25px; }
+        .btn-admin-add { background: linear-gradient(135deg, #059669, #10b981); font-size: 13px; padding: 8px 22px; border-radius: 20px; }
+
+        #admin-save-bar {
+            position: fixed; top: 0; left: 0; width: 100%; background: #d97706; color: #fff;
+            padding: 14px; text-align: center; font-weight: bold; font-size: 14px; z-index: 999999; display: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5); justify-content: center; align-items: center; gap: 15px;
+        }
+        .btn-save-code { background: #fff; color: #000; border: none; padding: 6px 18px; border-radius: 6px; cursor: pointer; font-weight: 800; }
+
+        @media (max-width: 480px) { 
+            header { padding: 16px 4%; }
+            .logo { font-size: 22px; }
+            .tg-btn-top { padding: 9px 18px; font-size: 12px; }
+            .grid { grid-template-columns: 1fr 1fr; gap: 12px; } 
+            .card { padding: 15px; border-radius: 18px; } 
+            .card-title { font-size: 13px; min-height: 44px; } 
+            .card-icon { height: 85px; font-size: 34px; margin-bottom: 12px; }
+            .card-price { font-size: 17px; margin: 12px 0; }
+            .shelf-section { padding: 20px 14px; border-radius: 24px; }
+            #cart-bar { bottom: 15px; width: 94%; padding: 12px 20px; border-radius: 18px; }
+            .cart-info { font-size: 13px; }
+            .cart-info span { font-size: 16px; }
+            .cart-btn { padding: 10px 20px; font-size: 12px; }
+            .nav-btn { padding: 11px 20px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="admin-save-bar" style="display: none;">
+        <span>⚠️ Ви змінили асортимент вітрини! Щоб зберегти зміни назавжди:</span>
+        <button class="btn-save-code" onclick="exportUpdatedCode()">Скопіювати новий код для GitHub</button>
+    </div>
+
+    <div id="age-gate" style="display: flex;">
+        <div class="age-box">
+            <h1>ПЕРЕВІРКА ВІКУ</h1>
+            <p>Вам вже виповнилося 18 років? Продаж нікотиновмісних продуктів неповнолітнім суворо заборонений.</p>
+            <div class="age-buttons">
+                <button class="btn" onclick="acceptAge()">ТАК, МЕНІ Є 18</button>
+                <a href="https://www.youtube.com/watch?v=KYniUCGPGLs" class="btn btn-red">НІ, МЕНІ НЕМАЄ 18</a>
+            </div>
         </div>
     </div>
 
-</body>
-</html>
+    <header>
+        <div class="logo">Marden<span> Vape</span></div>
+        <a href="https://t.me/Marden_Chaser" target="_blank" class="tg-btn-top">✈ Замовити у Telegram</a>
+    </header>
+
+    <div class="shelf-navigation">
+        <div class="nav-title">Оберіть потрібну поличку:</div>
+        <div class="nav-buttons">
+            <button class="nav-btn active" onclick="showShelf('all')">Усі товари</button>
+            <button class="nav-btn" onclick="showShelf('30')">Рідини 30 мл</button>
+            <button class="nav-btn" onclick="showShelf('10')">Рідини 10 мл</button>
+            <button class="nav-btn" onclick="showShelf('hard')">Картриджі</button>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div id="shelf-30" class="shelf-section" style="display: block;">
+            <div class="shelf-title">
+                <h2>🧪 Поличка Chaser 30 мл (65mg)</h2>
+                <div class="badge">290 грн</div>
+            </div>
+
+            <div class="flavor-category">
+                <div class="category-title">🍋 Кислі та Освіжаючі мікси</div>
+                <div class="grid">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class="admin-add-flavor-zone" style="display: none;"><button class="btn btn-admin-add" onclick="addNewFlavor(this, '30')">➕ Додати смак</button></div>
+            </div>
+
+            <div class="flavor-category">
+                <div class="category-title">🍓 Солодкі Ягідні Коктейлі</div>
+                <div class="grid">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class="admin-add-flavor-zone" style="display: none;"><button class="btn btn-admin-add" onclick="addNewFlavor(this, '30')">➕ Додати смак</button></div>
+            </div>
+
+            <div class="flavor-category">
+                <div class="category-title">🥭 Стиглі Фрукти та Екзотика</div>
+                <div class="grid">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class="admin-add-flavor-zone" style="display: none;"><button class="btn btn-admin-add" onclick="addNewFlavor(this, '30')">➕ Додати смак</button></div>
+            </div>
+
+            <div class="flavor-category">
+                <div class="category-title">🍓 Солодкі Ягідні Коктейлі</div>
+                <div class="grid">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class="admin-add-flavor-zone" style="display: none;"><button class="btn btn-admin-add" onclick="addNewFlavor(this, '30')">➕ Додати смак</button></div>
+            </div>
+
+            <div class="flavor-category">
+                <div class="category-title">🥭 Стиглі Фрукти та Екзотика</div>
+                <div class="grid">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class="admin-add-flavor-zone" style="display: none;"><button class="btn btn-admin-add" onclick="addNewFlavor(this, '30')">➕ Додати смак</button></div>
+            </div>
+        </div>
+
+        <div id="shelf-10" class="shelf-section" style="display: block;">
+            <div class="shelf-title">
+                <h2>🧪 Поличка Chaser 10 мл (65mg)</h2>
+                <div class="badge">145 грн</div>
+            </div>
+
+            <div class="flavor-category">
+                <div class="category-title">    Свіжі та Фруктові мікси</div>
+                <div class="grid">
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+                <div class="admin-add-flavor-zone" style="display: none;"><button class="btn btn-admin-add" onclick="addNewFlavor(this, '10')">➕ Додати смак</button></div>
+            </div>
+        </div>
+
+        <div id="shelf-hard" class="shelf-section" style="display: block;">
+            <div class="shelf-title">
+                <h2>🔌 Картриджі Xros</h2>
+                <div class="badge">130 грн</div>
+            </div>
+
+            <div class="flavor-category">
+                <div class="category-title">⚙️ Вихідні розхідники</div>
+                <div class="grid">
+                    
+                </div>
+                <div class="admin-add-flavor-zone" style="display: none;"><button class="btn btn-admin-add" onclick="addNewFlavor(this, 'hard')">➕ Додати картридж</button></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="cart-bar">
+        <div class="cart-info">У кошику товарів: <span id="cart-count">0</span> шт. | Сума: <span id="cart-total">0</span> грн</div>
+        <button class="cart-btn" onclick="sendOrder()">Оформити у Telegram ✈</button>
+    </div>
+
+    <div id="admin-modal" style="display: none;">
+        <div class="admin-box">
+            <h3>Вхід в панель управління</h3>
+            <input type="text" id="admin-login" class="admin-input" placeholder="Логін">
+            <input type="password" id="admin-pass" class="admin-input" placeholder="Пароль">
+            <div class="admin-box-buttons">
+                <button class="btn btn-red" onclick="closeAdmin()">Скасувати</button>
+                <button class="btn" onclick="checkAdminCredentials()">Увійти</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 Marden Vape. Усі права захищені. Вітрина створена суто для ознайомлення з асортиментом. 
+        <span class="secret-admin-trigger" onclick="openAdmin()">.</span>
+    </footer>
+
+    <script>
+        let cart = {};
+
+        function acceptAge() {
+            document.getElementById('age-gate').style.display = 'none';
+        }
+
+        function showShelf(shelfId) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            if(window.event && window.event.target && window.event.target.classList.contains('nav-btn')) {
+                window.event.target.classList.add('active');
+            } else if (event && event.target) {
+                let tg = event.target;
+                if(tg.tagName === 'BUTTON') tg.classList.add('active');
+            }
+
+            if(shelfId === 'all') {
+                document.querySelectorAll('.shelf-section').forEach(s => s.style.display = 'block');
+            } else {
+                document.querySelectorAll('.shelf-section').forEach(s => s.style.display = 'none');
+                document.getElementById('shelf-' + shelfId).style.display = 'block';
+            }
+        }
+
+        function addToCart(button) {
+            let card = button.closest('.card');
+            let id = card.getAttribute('data-id');
+            let name = card.getAttribute('data-name');
+            let price = parseInt(card.getAttribute('data-price'));
+
+            if (!cart[id]) {
+                cart[id] = { name: name, price: price, qty: 1 };
+            }
+            updateCardActionZone(card, id);
+            updateCartBar();
+        }
+
+        function changeQty(id, delta) {
+            if (cart[id]) {
+                cart[id].qty += delta;
+                if (cart[id].qty <= 0) {
+                    delete cart[id];
+                }
+            }
+            let card = document.querySelector(`[data-id="${id}"]`);
+            if (card) {
+                updateCardActionZone(card, id);
+            }
+            updateCartBar();
+        }
+
+        function updateCardActionZone(card, id) {
+            let zone = card.querySelector('.action-zone');
+            if (cart[id]) {
+                zone.innerHTML = `
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="changeQty('${id}', -1)">-</button>
+                        <span class="qty-count">${cart[id].qty}</span>
+                        <button class="qty-btn" onclick="changeQty('${id}', 1)">+</button>
+                    </div>
+                `;
+            } else {
+                zone.innerHTML = `<button class="btn" onclick="addToCart(this)">В кошик</button>`;
+            }
+        }
+
+        function updateCartBar() {
+            let count = 0;
+            let total = 0;
+            for (let id in cart) {
+                count += cart[id].qty;
+                total += cart[id].price * cart[id].qty;
+            }
+
+            let bar = document.getElementById('cart-bar');
+            if (count > 0) {
+                bar.style.display = 'flex';
+                document.getElementById('cart-count').innerText = count;
+                document.getElementById('cart-total').innerText = total;
+            } else {
+                bar.style.display = 'none';
+            }
+        }
+
+        function sendOrder() {
+            let text = "Вітаю! Хочу зробити замовлення:\n\n";
+            let total = 0;
+            for (let id in cart) {
+                let cost = cart[id].price * cart[id].qty;
+                text += `▪️ ${cart[id].name} — ${cart[id].qty} шт. (${cost} грн)\n`;
+                total += cost;
+            }
+            text += `\n💰 Загальна сума: ${total} грн`;
+            
+            let url = "https://t.me/Marden_Chaser?text=" + encodeURIComponent(text);
+            window.open(url, '_blank');
+        }
+
+        let isAdminActive = false;
+
+        function openAdmin() {
+            document.getElementById('admin-modal').style.display = 'flex';
+            document.getElementById('admin-login').value = '';
+            document.getElementById('admin-pass').value = '';
+        }
+
+        function closeAdmin() {
+            document.getElementById('admin-modal').style.display = 'none';
+        }
+
+        function checkAdminCredentials() {
+            let loginInput = document.getElementById('admin-login').value;
+            let passInput = document.getElementById('admin-pass').value;
+
+            let correctLogin = "admin";
+            let correctPass = "MardenVape2026";
+
+            if (loginInput === correctLogin && passInput === correctPass) {
+                alert("Вхід виконано! Режим редагування активовано.");
+                activateAdminMode();
+                closeAdmin();
+            } else {
+                alert("Неправильний логін або пароль!");
+            }
+        }
+
+        function activateAdminMode() {
+            isAdminActive = true;
+            document.querySelectorAll('.admin-controls').forEach(el => el.style.display = 'flex');
+            document.querySelectorAll('.admin-add-flavor-zone').forEach(el => el.style.display = 'flex');
+            document.getElementById('admin-save-bar').style.display = 'flex';
+        }
+
+        function showSaveNotice() {
+            if (isAdminActive) {
+                document.getElementById('admin-save-bar').style.display = 'flex';
+            }
+        }
+
+        function deleteFlavor(button) {
+            if(confirm("Ви дійсно хочете видалити цей товар з вітрини?")) {
+                let card = button.closest('.card');
+                card.remove();
+                showSaveNotice();
+            }
+        }
+
+        function editFlavorStock(button) {
+            let card = button.closest('.card');
+            let stockEl = card.querySelector('.stock-count');
+            let currentStock = stockEl.innerText.replace(' шт', '');
+            
+            let newStock = prompt("Введіть нову кількість товару в шт:", currentStock);
+            if (newStock !== null && newStock.trim() !== "") {
+                stockEl.innerText = newStock + " шт";
+                showSaveNotice();
+            }
+        }
+
+        function editFlavorName(button) {
+            let card = button.closest('.card');
+            let titleEl = card.querySelector('.card-title');
+            let iconEl = card.querySelector('.card-icon');
+            
+            let currentFullName = card.getAttribute('data-name');
+            let currentIcon = iconEl.innerText;
+
+            let newIcon = prompt("Введіть смакові емодзі (наприклад, 🍓🍏):", currentIcon);
+            let newName = prompt("Введіть нову технічную назву смаку (для кошику):", currentFullName);
+
+            if (newIcon !== null && newIcon.trim() !== "") {
+                iconEl.innerText = newIcon;
+            }
+            if (newName !== null && newName.trim() !== "") {
+                card.setAttribute('data-name', newName);
+                
+                let badgeClass = card.getAttribute('data-id').startsWith('30') ? 'ml-30' : (card.getAttribute('data-id').startsWith('10') ? 'ml-10' : 'ml-hard');
+                let badgeText = card.getAttribute('data-id').startsWith('30') ? '30 ML' : (card.getAttribute('data-id').startsWith('10') ? '10 ML' : 'Cartridge');
+                
+                let cleanName = newName.replace('(30ml)', '').replace('(10ml)', '').trim();
+                titleEl.innerHTML = `${cleanName} <span class="ml-badge ${badgeClass}">${badgeText}</span>`;
+                showSaveNotice();
+            }
+        }
+
+        function addNewFlavor(button, type) {
+            let category = button.closest('.flavor-category');
+            let grid = category.querySelector('.grid');
+            
+            let name = prompt("Назва нового товару (наприклад: Mango Ice):");
+            if(!name) return;
+
+            let emojis = prompt("Емодзі для картки (наприклад: 🥭❄️):", "🧪");
+            let stock = prompt("Кількість на складі (шт):", "5");
+            
+            let price = type === '30' ? '290' : (type === '10' ? '145' : '130');
+            let volumeText = type === '30' ? '30ml' : (type === '10' ? '10ml' : 'pcs');
+            let badgeClass = type === '30' ? 'ml-30' : (type === '10' ? 'ml-10' : 'ml-hard');
+            let badgeLabel = type === '30' ? '30 ML' : (type === '10' ? '10 ML' : 'Cartridge');
+
+            let uniqueId = type + '-' + Math.random().toString(36).substr(2, 5);
+            let fullName = `${name} (${volumeText})`;
+
+            let newCardHTML = `
+                <div class="card" data-id="${uniqueId}" data-name="${fullName}" data-price="${price}">
+                    <div class="admin-controls" style="display: flex;">
+                        <button class="admin-ctrl-btn btn-ctrl-edit" onclick="editFlavorName(this)">Назва</button>
+                        <button class="admin-ctrl-btn btn-ctrl-stock" onclick="editFlavorStock(this)">К-сть</button>
+                        <button class="admin-ctrl-btn btn-ctrl-del" onclick="deleteFlavor(this)">Видалити</button>
+                    </div>
+                    <div class="card-icon">${emojis}</div>
+                    <div class="card-title">${name} <span class="ml-badge ${badgeClass}">${badgeLabel}</span></div>
+                    <div class="card-price">${price} грн<div class="stock-count">${stock} шт</div></div>
+                    <div class="action-zone"><button class="btn" onclick="addToCart(this)">В кошик</button></div>
+                </div>
+            `;
+            
+            grid.insertAdjacentHTML('beforeend', newCardHTML);
+            showSaveNotice();
+        }
+
+        function exportUpdatedCode() {
+            document.querySelectorAll('.admin-controls').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.admin-add-flavor-zone').forEach(el => el.style.display = 'none');
+            document.getElementById('admin-save-bar').style.display = 'none';
+            
+            document.querySelectorAll('.card').forEach(card => {
+                let zone = card.querySelector('.action-zone');
+                zone.innerHTML = `<button class="btn" onclick="addToCart(this)">В кошик</button>`;
+            });
+
+            document.getElementById('age-gate').style.display = 'flex';
+
+            let fullHTML = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            
+            navigator.clipboard.writeText(fullHTML).then(() => {
+                alert("🔥 Новий код успішно СКОПІЙОВАНО!\n\nЗаміни вміст index.html на GitHub і перевіряй результат!");
+                activateAdminMode();
+            }).catch(err => {
+                alert("Помилка копіювання. Код виведено у консоль.");
+                console.log(fullHTML);
+                activateAdminMode();
+            });
+        }
+    </script>
+
+
+<veepn-lock-screen><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2)format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2)format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-lock-screen></body></html>
